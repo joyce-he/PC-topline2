@@ -27,6 +27,11 @@
               </el-col>
           </el-row>
         </el-form-item>
+        <el-form-item prop="read">
+          <el-checkbox v-model="form.read" name="type">
+            我已阅读并同意<a href="#">用户协议</a>和<a href="#">隐私条款</a>
+          </el-checkbox>
+        </el-form-item>
         <el-form-item>
           <el-button class="loginbtn" @click="login" :loading="loginloading" type="primary">登录</el-button>
         </el-form-item>
@@ -45,19 +50,29 @@ export default {
       // 表单的参数
       form: {
         mobile: '13911111111',
-        code: '246810'
+        code: '246810',
+        read: false
       },
       // 控制菊花的显示
       loginloading: false,
       // 定义规则
       rules: {
         mobile: [
+          // 必填
           { required: true, message: '请输入手机号码', trigger: 'blur' },
+          // 限制长度
           { min: 11, max: 11, message: '长度必须为11', trigger: 'blur' }
         ],
         code: [
           { required: true, message: '请输入验证码', trigger: 'blur' },
           { min: 6, max: 6, message: '长度必须为6', trigger: 'blur' }
+        ],
+        read: [
+          { required: true, message: '请先阅读用户协议', trigger: 'change' },
+          // 限制结果为 true: 正则
+          // pattern: 设置一个正则规则
+          // pattern: /true/ 只能匹配到结果为 true
+          { pattern: /true/, message: '请先阅读用户协议', trigger: 'change' }
         ]
       }
     }
