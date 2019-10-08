@@ -23,7 +23,7 @@
                   <el-input v-model="form.code" placeholder="请输入验证码"></el-input>
               </el-col>
               <el-col :span="8" :offset="2">
-                  <el-button class="colBtn">获取验证码</el-button>
+                  <el-button class="colBtn" @click="getCode">获取验证码</el-button>
               </el-col>
           </el-row>
         </el-form-item>
@@ -117,6 +117,22 @@ export default {
       }).catch(err => {
         console.log(err)
         this.$message.error('手机号或者验证码错误')
+      })
+    },
+    // 验证手机号码是否存在
+    getCode () {
+      // 获取 form 表单
+      // validateField(field, callback)
+      // field: 要验证的字段
+      // callback：验证后的回调函数
+      //    errMsg：验证不通过时的提示文本
+      this.$refs['form'].validateField('mobile', errMsg => {
+        if (errMsg.trim().length > 0) {
+          // 说明验证不通过
+          return
+        }
+        // 验证通过
+        console.log('这是通过之后的代码')
       })
     }
   }
