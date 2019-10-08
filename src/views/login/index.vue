@@ -1,43 +1,50 @@
 <template>
-    <!-- 登录页面 -->
-    <div class="login">
-        <div class="login-warp">
-            <!-- logo 区域 -->
-            <div class="loginlogo">
-                <img src="./logo_index.png" alt="">
-            </div>
-            <!-- el-form: 管理所有表单元素的父容器  ref: vue 中提供的操作 dom 的方式 model: 表单元素的数据源 label-width： 描述文本的宽度 -->
-            <el-form ref="form" :model="form" :rules="rules">
-                <!-- el-form-item：表单域 label: 当前选项的描述文字 -->
-                <el-form-item prop="mobile">
-                    <el-input v-model="form.mobile" placeholder="请输入手机号"></el-input>
-                </el-form-item>
-                <el-form-item prop="code">
-                    <!-- 一行 -->
-                    <el-row>
-                        <el-col :span="14">
-                            <el-input v-model="form.code" placeholder="请输入验证码"></el-input>
-                        </el-col>
-                        <el-col :span="6">
-                            <el-button>获取验证码</el-button>
-                        </el-col>
-                    </el-row>
-                </el-form-item>
-                <el-form-item>
-                    <el-button class="loginbtn" @click="login" type="primary">登录</el-button>
-                </el-form-item>
-            </el-form>
-        </div>
+  <!-- 登录页面 -->
+  <div class="login">
+    <div class="login-warp">
+      <!-- logo 区域 -->
+      <div class="loginlogo">
+        <img src="./logo_index.png" alt="">
+      </div>
+      <!-- el-form: 管理所有表单元素的父容器  ref: vue 中提供的操作 dom 的方式 model: 表单元素的数据源 label-width： 描述文本的宽度 -->
+      <el-form ref="form" :model="form" :rules="rules">
+        <!-- el-form-item：表单域 label: 当前选项的描述文字 -->
+        <el-form-item prop="mobile">
+          <el-input v-model="form.mobile" placeholder="请输入手机号"></el-input>
+        </el-form-item>
+        <el-form-item prop="code">
+          <!-- <div class="myitem">
+            <el-input v-model="form.code" placeholder="请输入验证码"></el-input>
+            <el-button class="itembtn">获取验证码</el-button>
+          </div> -->
+          <!-- 一行 -->
+          <el-row>
+              <el-col :span="14">
+                  <el-input v-model="form.code" placeholder="请输入验证码"></el-input>
+              </el-col>
+              <el-col :span="8" :offset="2">
+                  <el-button class="colBtn">获取验证码</el-button>
+              </el-col>
+          </el-row>
+        </el-form-item>
+        <el-form-item>
+          <el-button class="loginbtn" @click="login" type="primary">登录</el-button>
+        </el-form-item>
+      </el-form>
     </div>
+  </div>
 </template>
 
 <script>
+// 导入 axios
+import axios from 'axios'
+
 export default {
   data () {
     return {
       form: {
-        mobile: '',
-        code: ''
+        mobile: '13911111111',
+        code: '246810'
       },
       // 定义规则
       rules: {
@@ -53,6 +60,7 @@ export default {
     }
   },
   methods: {
+    // 用户的登录
     login () {
       // 得到 el-form 元素
       // validate: 验证当前表单元素中所有的规则
@@ -60,10 +68,33 @@ export default {
         // 如果 valid 为 true 说明验证通过
         // 如果 valid 为 false 说明验证不通过
         if (valid) {
-          console.log('验证通过')
+          // 将数据提到服务器
+          this.submitData()
         } else {
           // 结束当前方法
+
         }
+      })
+    },
+    // 数据的提交
+    submitData () {
+      // 发送请求到服务器
+      axios({
+        url: 'http://ttapi.research.itcast.cn/mp/v1_0/authorizations',
+        method: 'POST',
+        data: this.form
+      }).then(res => {
+        // res 中有一个属性叫做 data, 在 data 中有两个属性后面我们会用上： token , refresh_token
+        // 只要进入到这个方法中说明登录成功
+        // 跳转到主页
+        this.$router.push('/')
+        this.$message({
+          message: '登录成功',
+          type: 'success'
+        })
+      }).catch(err => {
+        console.log(err)
+        this.$message.error('手机号或者验证码错误')
       })
     }
   }
@@ -72,25 +103,35 @@ export default {
 
 <style lang="less" scoped>
 .login {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #ccc;
-    .login-warp {
-        background-color: #fff;
-        padding: 30px;
-        min-width: 300px;
-        .loginlogo {
-            text-align: center;
-            img {
-                width: 150px;
-                margin-bottom: 20px;
-            }
-        }
-        .loginbtn {
-            width: 100%;
-        }
+  height: 100%; // flex 布局
+  display: flex; // 主轴居中：默认 水平
+  justify-content: center; // 侧轴居中：默认 垂直
+  align-items: center;
+  background-color: #ccc;
+  .login-warp {
+    background-color: #fff;
+    padding: 30px;
+    min-width: 300px;
+    .loginlogo {
+      text-align: center;
+      img {
+        width: 150px;
+        margin-bottom: 20px;
+      }
     }
+    .loginbtn {
+      width: 100%;
+    }
+    .myitem {
+      display: flex;
+      justify-content: space-between;
+      .itembtn {
+        margin-left: 20px;
+      }
+    }
+    .colBtn {
+      width: 100%;
+    }
+  }
 }
 </style>
