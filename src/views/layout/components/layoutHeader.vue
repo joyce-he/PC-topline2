@@ -13,8 +13,8 @@
                     </div> -->
                 <el-dropdown trigger="click">
                     <span class="el-dropdown-link userinfo">
-                        <img class="icon" src="http://toutiao.meiduo.site/FooXtzfvHZvDCyh1CwhsoMsSH_Op" alt="">
-                        <span class="name">群姐</span>
+                        <img class="icon" :src="userInfo.photo" alt="">
+                        <span class="name">{{ userInfo.name }}</span>
                         <i class="el-icon-arrow-down el-icon--right"></i>
                     </span>
                     <el-dropdown-menu slot="dropdown">
@@ -30,7 +30,15 @@
 
 <script>
 export default {
-
+  data () {
+    return {
+      userInfo: {}
+    }
+  },
+  created () {
+    // 从 localstorage 中取出 userInfo
+    this.userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
+  }
 }
 </script>
 

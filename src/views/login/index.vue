@@ -14,25 +14,27 @@
         </el-form-item>
         <el-form-item prop="code">
           <!-- <div class="myitem">
-            <el-input v-model="form.code" placeholder="请输入验证码"></el-input>
-            <el-button class="itembtn">获取验证码</el-button>
-          </div> -->
+              <el-input v-model="form.code" placeholder="请输入验证码"></el-input>
+              <el-button class="itembtn">获取验证码</el-button>
+            </div> -->
           <!-- 一行 -->
           <el-row>
-              <el-col :span="14">
-                  <el-input v-model="form.code" placeholder="请输入验证码"></el-input>
-              </el-col>
-              <el-col :span="8" :offset="2">
-                <!-- timer: 2 (定时器的标识) 定时器开启 timer: null 定时器关闭 -->
-                  <el-button :disabled="!!timer" class="colBtn" @click="getCode">
-                    {{ timer ? `${codeTime}s后获取`: '获取验证码'  }}
-                  </el-button>
-              </el-col>
+            <el-col :span="14">
+              <el-input v-model="form.code" placeholder="请输入验证码"></el-input>
+            </el-col>
+            <el-col :span="8" :offset="2">
+              <!-- timer: 2 (定时器的标识) 定时器开启 timer: null 定时器关闭 -->
+              <el-button :disabled="!!timer" class="colBtn" @click="getCode">
+                {{ timer ? `${codeTime}s后获取`: '获取验证码' }}
+              </el-button>
+            </el-col>
           </el-row>
         </el-form-item>
         <el-form-item prop="read">
           <el-checkbox v-model="form.read" name="type">
-            我已阅读并同意<a href="#">用户协议</a>和<a href="#">隐私条款</a>
+            我已阅读并同意
+            <a href="#">用户协议</a>和
+            <a href="#">隐私条款</a>
           </el-checkbox>
         </el-form-item>
         <el-form-item>
@@ -112,6 +114,10 @@ export default {
         data: this.form
       }).then(res => {
         // res 中有一个属性叫做 data, 在 data 中有两个属性后面我们会用上： token , refresh_token
+        // 得到用户信息
+        let userInfo = res.data.data
+        // 将用户的信息保存到 localstorage 中
+        window.localStorage.setItem('userInfo', JSON.stringify(userInfo))
         // 只要进入到这个方法中说明登录成功
         this.$message({
           message: '登录成功',
