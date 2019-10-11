@@ -11,6 +11,8 @@ import Home from '@/views/home'
 import Layout from '@/views/layout'
 // 导入 publish
 import Publish from '@/views/publish'
+// 导入 list
+import List from '@/views/article/list'
 
 // 导入 nprogress
 import nprogress from 'nprogress'
@@ -45,7 +47,9 @@ let router = new Router({
         // 将 home 作为 layout 的子路由存在
         { path: '/home', component: Home },
         // 添加一个 publish 路由
-        { path: '/publish', component: Publish }
+        { path: '/publish', component: Publish },
+        // 添加一个 list 路由
+        { path: '/article/list', component: List }
       ]
     },
     // 测试路由
