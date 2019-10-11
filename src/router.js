@@ -12,6 +12,11 @@ import Layout from '@/views/layout'
 // 导入 publish
 import Publish from '@/views/publish'
 
+// 导入 nprogress
+import nprogress from 'nprogress'
+// 导入样式文件
+import 'nprogress/nprogress.css'
+
 // 使用路由
 Vue.use(Router)
 
@@ -59,21 +64,30 @@ let router = new Router({
 //  from: 发起跳转的路由
 //  next: 函数，是否执行后续代码
 router.beforeEach((to, from, next) => {
+  // 开启进度条
+  nprogress.start()
   // 说明请求的路由发生了改变
   // 排除跳转到登录页面
   if (to.path !== '/login') {
-    // 得到 localstorage 中的 userInfo
+    // 得到 localstorage 中的 userInfo： 如果存在  userInfo 说明登录成功，如果 userInfo 不存在，说明没有登录
     let userInfo = window.localStorage.getItem('userInfo')
     // 判断用户是否登录：
     if (!userInfo) {
       // 如果不存在说明没有登录过，应该跳转到登录页面
       router.push('/login')
     } else {
-      next()// 执行后续代码
+      next() // 执行后续代码
     }
   } else {
+    // 如果访问的是 login 说明不需要进行登录验证
     next() // 执行后续代码
   }
+})
+
+// 在全局后置钩子中关闭进度条
+router.afterEach((to, from) => {
+  // 关闭进度条
+  nprogress.done()
 })
 
 export default router
