@@ -47,11 +47,12 @@
 
 <script>
 // 导入 axios
-import axios from 'axios'
+// import axios from 'axios'
 
 export default {
   data () {
     return {
+      http: '',
       // 表单的参数
       form: {
         mobile: '13911111111',
@@ -108,8 +109,8 @@ export default {
       // 将加载状态设置为 true
       this.loginloading = true
       // 发送请求到服务器
-      axios({
-        url: 'http://ttapi.research.itcast.cn/mp/v1_0/authorizations',
+      this.$http({
+        url: '/authorizations',
         method: 'POST',
         data: this.form
       }).then(res => {
