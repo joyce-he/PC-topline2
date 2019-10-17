@@ -37,7 +37,9 @@ export default {
   },
   created () {
     // 从 localstorage 中取出 userInfo
-    this.userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
+    // this.userInfo = JSON.parse(window.localStorage.getItem('userInfo'))
+    // 从 vuex 中取出 userInfo
+    this.userInfo = this.$store.state.userInfo
   }
 }
 </script>

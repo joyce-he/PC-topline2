@@ -10,9 +10,15 @@ import Home from '@/views/home'
 // 导入 layout
 import Layout from '@/views/layout'
 // 导入 publish
-import Publish from '@/views/publish'
+import Publish from '@/views/article/publish'
 // 导入 list
 import List from '@/views/article/list'
+// 导入评论组件
+import Comment from '@/views/comment'
+// 导入素材组件
+import Material from '@/views/material'
+// 导入账户
+import User from '@/views/user'
 
 // 导入 nprogress
 import nprogress from 'nprogress'
@@ -47,9 +53,17 @@ let router = new Router({
         // 将 home 作为 layout 的子路由存在
         { path: '/home', component: Home },
         // 添加一个 publish 路由
-        { path: '/publish', component: Publish },
+        { path: '/article/publish', component: Publish },
         // 添加一个 list 路由
-        { path: '/article/list', component: List }
+        { path: '/article/list', component: List },
+        // 添加一个 修改文章 的路由
+        { path: '/article/edit/:id', component: Publish },
+        // 添加一个评论的路由
+        { path: '/comment', component: Comment },
+        // 添加一个素材的路由
+        { path: '/material', component: Material },
+        // 添加一个用户的路由
+        { path: '/user/center', component: User }
       ]
     },
     // 测试路由

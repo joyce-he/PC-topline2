@@ -15,16 +15,16 @@
                 <template slot="title">
                     <span>内容管理</span>
                 </template>
-                <el-menu-item index="/publish">
+                <el-menu-item index="/article/publish">
                     <span slot="title">发布文章</span>
                 </el-menu-item>
                 <el-menu-item index="/article/list">
                     <span slot="title">内容列表</span>
                 </el-menu-item>
-                <el-menu-item index="2-3">
+                <el-menu-item index="/comment">
                     <span slot="title">评论列表</span>
                 </el-menu-item>
-                <el-menu-item index="2-4">
+                <el-menu-item index="/material">
                     <span slot="title">素材管理</span>
                 </el-menu-item>
             </el-submenu>
@@ -45,10 +45,11 @@
                     <span slot="title">粉丝列表</span>
                 </el-menu-item>
             </el-submenu>
-            <el-menu-item index="4">
+            <el-menu-item index="/user/center">
                 <span slot="title">帐户信息</span>
             </el-menu-item>
         </el-menu>
+        <!-- <button @click="update">修改 vuex</button> -->
     </div>
 </template>
 
@@ -61,6 +62,10 @@ export default {
     //   handleClose () {
     //       console.log('哎呀!我被关闭了')
     //   }
+    update () {
+      // 调用 Vuex 中的 mutations 中的方法
+      this.$store.commit('changeUserInfo')
+    }
   }
 }
 </script>
